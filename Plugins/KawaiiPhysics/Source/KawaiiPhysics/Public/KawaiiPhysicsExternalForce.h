@@ -1,9 +1,15 @@
-﻿// KawaiiPhysics : Copyright (c) 2019-2024 pafuhana1213, MIT License
+﻿// Copyright 2019-2025 pafuhana1213. All Rights Reserved.
 
 #pragma once
+#include "Engine/World.h"
 #include "AnimNode_KawaiiPhysics.h"
 #include "SceneManagement.h"
 #include "Curves/CurveVector.h"
+
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 6
+#include "Components/SkeletalMeshComponent.h"
+#endif
+
 #include "KawaiiPhysicsExternalForce.generated.h"
 
 /**
