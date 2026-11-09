@@ -72,8 +72,8 @@ namespace KawaiiPhysicsPresetDataAssetDetailsPrivate
 			Preset->bTargetTagsExactMatch,
 			TArray<FString>(),
 			AnimBlueprintAssets);
-		UE_LOG(LogKawaiiPhysics, Display,
-		       TEXT("FindTargetNodes: SearchableName prefilter kept %d AnimBlueprint asset(s)."),
+		UE_LOGF(LogKawaiiPhysics, Display,
+		       UTF8TEXT("FindTargetNodes: SearchableName prefilter kept %d AnimBlueprint asset(s)."),
 		       AnimBlueprintAssets.Num());
 
 		// アセット数が多いとロード＋走査に時間がかかるため、進捗ダイアログを表示する（キャンセル非対応）。
@@ -94,8 +94,8 @@ namespace KawaiiPhysicsPresetDataAssetDetailsPrivate
 			UAnimBlueprint* AnimBlueprint = Cast<UAnimBlueprint>(AssetData.GetAsset());
 			if (!AnimBlueprint)
 			{
-				UE_LOG(LogKawaiiPhysics, Warning,
-				       TEXT("FindTargetNodes: Failed to load AnimBlueprint asset '%s'."),
+				UE_LOGF(LogKawaiiPhysics, Warning,
+				       UTF8TEXT("FindTargetNodes: Failed to load AnimBlueprint asset '%ls'."),
 				       *AssetData.GetSoftObjectPath().ToString());
 				continue;
 			}
@@ -114,8 +114,8 @@ namespace KawaiiPhysicsPresetDataAssetDetailsPrivate
 				if (UAnimGraphNode_KawaiiPhysics* GraphNode = Handle.Node.Get())
 				{
 					++MatchingNodeCount;
-					UE_LOG(LogKawaiiPhysics, Display,
-					       TEXT("FindTargetNodes: AnimBlueprint=%s NodeTag=%s Graph=%s NodeGuid=%s"),
+					UE_LOGF(LogKawaiiPhysics, Display,
+					       UTF8TEXT("FindTargetNodes: AnimBlueprint=%ls NodeTag=%ls Graph=%ls NodeGuid=%ls"),
 					       *AnimBlueprint->GetName(),
 					       *GraphNode->Node.KawaiiPhysicsTag.ToString(),
 					       *(GraphNode->GetGraph() ? GraphNode->GetGraph()->GetName() : FString(TEXT("None"))),
@@ -176,8 +176,8 @@ namespace KawaiiPhysicsPresetDataAssetDetailsPrivate
 			}
 
 			++DiffNodeCount;
-			UE_LOG(LogKawaiiPhysics, Display,
-			       TEXT("ApplyToProjectDryRun: AnimBlueprint=%s NodeTag=%s DiffProperties=%s"),
+			UE_LOGF(LogKawaiiPhysics, Display,
+			       UTF8TEXT("ApplyToProjectDryRun: AnimBlueprint=%ls NodeTag=%ls DiffProperties=%ls"),
 			       *Entry.AnimBlueprintPath.GetAssetName(),
 			       *Entry.KawaiiPhysicsTag.ToString(),
 			       *JoinPresetPropertyNames(Entry.DiffProperties));

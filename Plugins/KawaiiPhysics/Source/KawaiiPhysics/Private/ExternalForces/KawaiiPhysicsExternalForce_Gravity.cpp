@@ -58,8 +58,8 @@ void FKawaiiPhysics_ExternalForce_Gravity::PreApply(FAnimNode_KawaiiPhysics& Nod
 					static std::atomic<bool> bWarnedLegacySign{false};
 					if (!bWarnedLegacySign.exchange(true))
 					{
-						UE_LOG(LogKawaiiPhysics, Warning,
-						       TEXT("a.AnimNode.KawaiiPhysics.Gravity.LegacyCharacterGravityScaleSign is enabled: "
+						UE_LOGF(LogKawaiiPhysics, Warning,
+						       UTF8TEXT("a.AnimNode.KawaiiPhysics.Gravity.LegacyCharacterGravityScaleSign is enabled: "
 							       "the Gravity external force with bUseCharacterGravityScale pushes upward (legacy behavior). "
 							       "This setting is deprecated and will be removed in a future version."));
 					}

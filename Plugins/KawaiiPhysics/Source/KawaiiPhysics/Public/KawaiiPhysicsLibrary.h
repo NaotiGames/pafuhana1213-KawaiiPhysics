@@ -2004,7 +2004,7 @@ bool UKawaiiPhysicsLibrary::SetNodePropertyValue(FAnimNode_KawaiiPhysics& Node, 
 		return false;
 	}
 
-	if (void* ValuePtr = Property->ContainerPtrToValuePtr<void>(&Node))
+	if (void* ValuePtr = Property->template ContainerPtrToValuePtr<void>(&Node))
 	{
 		// 同じ値を毎フレーム設定しても作り直しや物理状態のリセットが起きないよう、値が変わったときだけ再初期化を要求する
 		const bool bChanged = !(Property->GetPropertyValue(ValuePtr) == Value);
@@ -2029,7 +2029,7 @@ bool UKawaiiPhysicsLibrary::GetNodePropertyValue(const FAnimNode_KawaiiPhysics& 
 		return false;
 	}
 
-	if (const void* ValuePtr = Property->ContainerPtrToValuePtr<void>(&Node))
+	if (const void* ValuePtr = Property->template ContainerPtrToValuePtr<void>(&Node))
 	{
 		OutValue = Property->GetPropertyValue(ValuePtr);
 		return true;

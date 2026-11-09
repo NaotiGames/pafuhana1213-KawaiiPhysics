@@ -20,7 +20,7 @@ static FString BuildKawaiiNodeContextString(
 
 // ノード特定情報を末尾に付与してWarningを出す（移植性のためFormatの後に最低1つの可変引数が必要）
 #define KAWAII_LOG_NODE_WARNING(CategoryName, Format, ...) \
-	UE_LOG(CategoryName, Warning, Format TEXT(" (%s)"), __VA_ARGS__, \
+	UE_LOGF(CategoryName, Warning, Format UTF8TEXT(" (%ls)"), __VA_ARGS__, \
 		*BuildKawaiiNodeContextString(CachedAnimInstanceClassName, CachedComponentName, \
 			CachedOwnerActorName, RootBone.BoneName))
 
@@ -33,8 +33,8 @@ static FString BuildKawaiiNodeContextString(
 #else
 // Shipping：コンテキストなしの素のログ。GuardBool引数は展開で破棄され、除外メンバを参照しない
 #define KAWAII_LOG_NODE_WARNING(CategoryName, Format, ...) \
-	UE_LOG(CategoryName, Warning, Format, __VA_ARGS__)
+	UE_LOGF(CategoryName, Warning, Format, __VA_ARGS__)
 #define KAWAII_LOG_NODE_WARNING_ONCE(GuardBool, CategoryName, Format, ...) \
-	UE_LOG(CategoryName, Warning, Format, __VA_ARGS__)
+	UE_LOGF(CategoryName, Warning, Format, __VA_ARGS__)
 #define KAWAII_RESET_NODE_WARNING_ONCE(GuardBool) ((void)0)
 #endif

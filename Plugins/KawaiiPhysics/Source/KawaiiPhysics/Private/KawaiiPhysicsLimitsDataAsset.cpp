@@ -231,7 +231,7 @@ void UKawaiiPhysicsLimitsDataAsset::PostLoad()
 		{
 			Data.DrivingBoneReference = FBoneReference(Data.DrivingBoneName);
 		}
-		UE_LOG(LogKawaiiPhysics, Log, TEXT("Update : BoneName -> BoneReference (%s)"), *this->GetName());
+		UE_LOGF(LogKawaiiPhysics, Log, UTF8TEXT("Update : BoneName -> BoneReference (%ls)"), *this->GetName());
 #endif
 	}
 
@@ -240,7 +240,7 @@ void UKawaiiPhysicsLimitsDataAsset::PostLoad()
 	{
 #if WITH_EDITORONLY_DATA
 		Sync();
-		UE_LOG(LogKawaiiPhysics, Log, TEXT("Update : Deprecate LimitData (%s)"), *this->GetName());
+		UE_LOGF(LogKawaiiPhysics, Log, UTF8TEXT("Update : Deprecate LimitData (%ls)"), *this->GetName());
 #endif
 	}
 
