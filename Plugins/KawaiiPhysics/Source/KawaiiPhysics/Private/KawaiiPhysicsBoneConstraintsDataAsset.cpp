@@ -91,7 +91,7 @@ void UKawaiiPhysicsBoneConstraintsDataAsset::PostLoad()
 #if WITH_EDITOR
 		UpdatePreviewBoneList();
 #endif
-		UE_LOG(LogKawaiiPhysics, Log, TEXT("Update : BoneName -> BoneReference (%s)"), *this->GetName());
+		UE_LOGF(LogKawaiiPhysics, Log, UTF8TEXT("Update : BoneName -> BoneReference (%ls)"), *this->GetName());
 	}
 }
 
@@ -129,8 +129,8 @@ void UKawaiiPhysicsBoneConstraintsDataAsset::ApplyRegex()
 			const FString MatchedBoneName2 = Matcher2.GetCaptureGroup(0);
 			if (MatchedBoneName1.Len() >= NAME_SIZE || MatchedBoneName2.Len() >= NAME_SIZE)
 			{
-				UE_LOG(LogKawaiiPhysics, Warning,
-				       TEXT("ApplyRegex: Regex match is too long to convert to FName. Asset=\"%s\", Bone1Length=%d, Bone2Length=%d, MaxLength=%d"),
+				UE_LOGF(LogKawaiiPhysics, Warning,
+				       UTF8TEXT("ApplyRegex: Regex match is too long to convert to FName. Asset=\"%ls\", Bone1Length=%d, Bone2Length=%d, MaxLength=%d"),
 				       *GetName(), MatchedBoneName1.Len(), MatchedBoneName2.Len(), NAME_SIZE - 1);
 				continue;
 			}
@@ -151,12 +151,12 @@ void UKawaiiPhysicsBoneConstraintsDataAsset::UpdatePreviewBoneList()
 	PreviewBoneList.Empty();
 	PreviewBoneListString.Empty();
 
-	if (!PreviewSkeleton.IsValid())
+	if (!PreviewSkeleton.IsLoaded())
 	{
 		PreviewSkeleton.LoadSynchronous();
 	}
 
-	if (PreviewSkeleton.IsValid())
+	if (PreviewSkeleton.IsLoaded())
 	{
 		const FReferenceSkeleton& RefSkeleton = PreviewSkeleton->GetReferenceSkeleton();
 		const TArray<FMeshBoneInfo>& RefBoneInfo = RefSkeleton.GetRefBoneInfo();

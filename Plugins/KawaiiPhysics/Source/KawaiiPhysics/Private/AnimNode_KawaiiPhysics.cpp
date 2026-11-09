@@ -660,7 +660,7 @@ void FAnimNode_KawaiiPhysics::EvaluateSkeletalControl_AnyThread(FComponentSpaceP
 		{
 			PrevBaseBoneSpace2ComponentSpace = FTransform::Identity;
 			KAWAII_LOG_NODE_WARNING_ONCE(bSimBaseBoneInvalidWarned, LogKawaiiPhysics,
-				TEXT("SimulationBaseBone [%s] is invalid. Reverting to Identity transform."),
+				UTF8TEXT("SimulationBaseBone [%ls] is invalid. Reverting to Identity transform."),
 				*SimulationBaseBone.BoneName.ToString());
 		}
 	}
@@ -761,7 +761,7 @@ void FAnimNode_KawaiiPhysics::EvaluateSkeletalControl_AnyThread(FComponentSpaceP
 		if (const int32 ForwardAxisMismatchCount = CountAngleLimitForwardAxisMismatches())
 		{
 			KAWAII_LOG_NODE_WARNING_ONCE(bAngleLimitForwardAxisWarned, LogKawaiiPhysics,
-				TEXT("Per Axis angle limit: BoneForwardAxis is more than 45 degrees off the bone direction on %d bone(s). The limit axes are aligned to the bone direction, so X/Y/Z may not match the parent bone's local axes. Check BoneForwardAxis if every bone is reported."),
+				UTF8TEXT("Per Axis angle limit: BoneForwardAxis is more than 45 degrees off the bone direction on %d bone(s). The limit axes are aligned to the bone direction, so X/Y/Z may not match the parent bone's local axes. Check BoneForwardAxis if every bone is reported."),
 				ForwardAxisMismatchCount);
 		}
 
@@ -796,13 +796,13 @@ void FAnimNode_KawaiiPhysics::EvaluateSkeletalControl_AnyThread(FComponentSpaceP
 		if (InterBoneDummyWarningThreshold > 0 && InterBoneDummyCount > InterBoneDummyWarningThreshold)
 		{
 			KAWAII_LOG_NODE_WARNING(LogAnimation,
-				TEXT("KawaiiPhysics: %d inter-bone dummy bones generated (warning threshold: %d). This may impact performance. Consider reducing BoneSubdivisionCount or raising InterBoneDummyWarningThreshold in Kawaii Physics project settings."),
+				UTF8TEXT("KawaiiPhysics: %d inter-bone dummy bones generated (warning threshold: %d). This may impact performance. Consider reducing BoneSubdivisionCount or raising InterBoneDummyWarningThreshold in Kawaii Physics project settings."),
 				InterBoneDummyCount, InterBoneDummyWarningThreshold);
 		}
 		if (BridgeDummyWarningThreshold > 0 && BridgeDummyCount > BridgeDummyWarningThreshold)
 		{
 			KAWAII_LOG_NODE_WARNING(LogAnimation,
-				TEXT("KawaiiPhysics: %d bridge collision-proxy dummy bones and %d merged bone constraints generated (warning threshold: %d). This may impact performance. Consider reducing BoneConstraintSubdivisionCount or raising BridgeDummyWarningThreshold in Kawaii Physics project settings."),
+				UTF8TEXT("KawaiiPhysics: %d bridge collision-proxy dummy bones and %d merged bone constraints generated (warning threshold: %d). This may impact performance. Consider reducing BoneConstraintSubdivisionCount or raising BridgeDummyWarningThreshold in Kawaii Physics project settings."),
 				BridgeDummyCount, MergedBoneConstraints.Num(), BridgeDummyWarningThreshold);
 		}
 #endif
@@ -1169,7 +1169,7 @@ void FAnimNode_KawaiiPhysics::UpdateSharedCollisionRegistration()
 				if (SharedCollisionInitRetryCount > RetryThreshold)
 				{
 					KAWAII_LOG_NODE_WARNING(LogKawaiiPhysics,
-						TEXT("SharedCollision: Target could not find source entry for tag [%s]. "
+						UTF8TEXT("SharedCollision: Target could not find source entry for tag [%ls]. "
 							"Ensure a source node with matching tag exists in the same actor/child-actor family."),
 						*SharedCollisionGroupTag.ToString());
 					bSharedCollisionInitWarningLogged = true;

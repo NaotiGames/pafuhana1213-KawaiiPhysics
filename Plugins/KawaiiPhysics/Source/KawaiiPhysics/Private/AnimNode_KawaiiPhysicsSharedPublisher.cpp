@@ -453,8 +453,8 @@ bool FKawaiiPhysicsSharedPublishHelper::Update(
 #if !UE_BUILD_SHIPPING
 	if (!bProviderConflictWarningLogged)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("Kawaii Physics Shared Publisher rejected publish for Tag '%s' because another provider is alive."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("Kawaii Physics Shared Publisher rejected publish for Tag '%ls' because another provider is alive."),
 		       *DebugTag.ToString());
 		bProviderConflictWarningLogged = true;
 	}
@@ -639,8 +639,8 @@ void FAnimNode_KawaiiPhysicsSharedPublisher::PreUpdate(const UAnimInstance* InAn
 #if !UE_BUILD_SHIPPING
 		if (!bInvalidTagWarningLogged)
 		{
-			UE_LOG(LogKawaiiPhysics, Warning,
-			       TEXT("Kawaii Physics Shared Publisher skipped initialization because Shared Group Tag is invalid."));
+			UE_LOGF(LogKawaiiPhysics, Warning,
+			       UTF8TEXT("Kawaii Physics Shared Publisher skipped initialization because Shared Group Tag is invalid."));
 			bInvalidTagWarningLogged = true;
 		}
 #endif
@@ -870,8 +870,8 @@ void FAnimNode_KawaiiPhysicsSharedPublisher::ApplySharedWindPreset()
 #if !UE_BUILD_SHIPPING
 	if (!bInvalidWindPresetWarningLogged)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("Kawaii Physics Shared Publisher failed to apply Wind Preset Tag '%s' from DataAsset '%s'."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("Kawaii Physics Shared Publisher failed to apply Wind Preset Tag '%ls' from DataAsset '%ls'."),
 		       *WindPresetTag.ToString(),
 		       *GetNameSafe(WindPresetDataAsset));
 		bInvalidWindPresetWarningLogged = true;

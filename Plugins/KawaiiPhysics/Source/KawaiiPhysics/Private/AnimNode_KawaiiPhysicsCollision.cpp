@@ -2,6 +2,8 @@
 
 #include "AnimNode_KawaiiPhysics.h"
 
+#include <type_traits>
+
 #include "Animation/MirrorDataTable.h"
 #include "AnimationRuntime.h"
 #include "KawaiiPhysicsAngleLimit.h"
@@ -21,7 +23,6 @@
 #include "PhysicsEngine/TaperedCapsuleElem.h"
 #include "Engine/World.h"
 #include "PhysicsEngine/PhysicsSettings.h"
-#include "Templates/RemoveReference.h"
 
 #if !UE_VERSION_OLDER_THAN(5, 5, 0)
 #include "PhysicsEngine/SkeletalBodySetup.h"
@@ -647,7 +648,7 @@ void FAnimNode_KawaiiPhysics::ApplyMirrorLimits(const FBoneContainer& RequiredBo
 		CachedMirrorTables.Reset();
 #endif
 		KAWAII_LOG_NODE_WARNING_ONCE(bMirrorSkeletonMissingWarned, LogKawaiiPhysics,
-			TEXT("MirrorDataTableForLimits is set, but RequiredBones has no Skeleton. Skip collision mirroring.%s"),
+			UTF8TEXT("MirrorDataTableForLimits is set, but RequiredBones has no Skeleton. Skip collision mirroring.%ls"),
 			TEXT(""));
 		return;
 	}
@@ -710,7 +711,7 @@ void FAnimNode_KawaiiPhysics::ApplyMirrorLimits(const FBoneContainer& RequiredBo
 	auto AppendMirrored = [&RequiredBones, &ResolveMirrorBoneName, &FindBoneIndex, &CSRefRotations, MirrorAxis,
 	                       this](const auto& NodeLimits, auto& MergedLimits)
 	{
-		using TLimit = typename TRemoveReference<decltype(MergedLimits)>::Type::ElementType;
+		using TLimit = typename std::remove_reference_t<decltype(MergedLimits)>::ElementType;
 
 		TArray<TLimit> NewLimits;
 		KawaiiPhysicsMirrorUtils::AppendMirroredLimits(NodeLimits, NodeLimits, MergedLimits,
@@ -2037,7 +2038,7 @@ void FAnimNode_KawaiiPhysics::ResolveSimpleWorldCollisionSource(uint64 CurrentFr
 		if (!bSimpleWorldInvalidSharedTagWarningLogged)
 		{
 			KAWAII_LOG_NODE_WARNING(LogKawaiiPhysics,
-				TEXT("SimpleWorldCollision: Shared Tag is None (Source: %s). Falling back to Local source."),
+				UTF8TEXT("SimpleWorldCollision: Shared Tag is None (Source: %ls). Falling back to Local source."),
 				*UEnum::GetValueAsString(SimpleWorldCollisionSource));
 			bSimpleWorldInvalidSharedTagWarningLogged = true;
 		}
@@ -2301,8 +2302,8 @@ void FAnimNode_KawaiiPhysics::UpdateSimpleWorldCollisionLimits(FComponentSpacePo
 				{
 					const FString TagName = SimpleWorldReaderKey.Tag.ToString();
 					const FString KeyObjectName = SimpleWorldReaderKeyObjectName.IsNone() ? FString(TEXT("None")) : SimpleWorldReaderKeyObjectName.ToString();
-					UE_LOG(LogKawaiiPhysics, Warning,
-					       TEXT("Shared Simple World Collision entry has no provider (Tag=%s, KeyObject=%s). Waiting for a Shared Publisher."),
+					UE_LOGF(LogKawaiiPhysics, Warning,
+					       UTF8TEXT("Shared Simple World Collision entry has no provider (Tag=%ls, KeyObject=%ls). Waiting for a Shared Publisher."),
 					       *TagName, *KeyObjectName);
 					bSimpleWorldReaderWarningLogged = true;
 				}
@@ -2342,8 +2343,8 @@ void FAnimNode_KawaiiPhysics::UpdateSimpleWorldCollisionLimits(FComponentSpacePo
 			{
 				const FString TagName = SimpleWorldReaderKey.Tag.ToString();
 				const FString KeyObjectName = SimpleWorldReaderKeyObjectName.IsNone() ? FString(TEXT("None")) : SimpleWorldReaderKeyObjectName.ToString();
-				UE_LOG(LogKawaiiPhysics, Warning,
-				       TEXT("Shared Simple World Collision entry has no provider (Tag=%s, KeyObject=%s). Waiting for a Shared Publisher."),
+				UE_LOGF(LogKawaiiPhysics, Warning,
+				       UTF8TEXT("Shared Simple World Collision entry has no provider (Tag=%ls, KeyObject=%ls). Waiting for a Shared Publisher."),
 				       *TagName, *KeyObjectName);
 				bSimpleWorldReaderWarningLogged = true;
 			}
@@ -2575,7 +2576,7 @@ void FAnimNode_KawaiiPhysics::CheckSimpleWorldGatherRadius(FComponentSpacePoseCo
 	if (SimpleWorldCollisionGatherRadius + KINDA_SMALL_NUMBER < RequiredRadius)
 	{
 		KAWAII_LOG_NODE_WARNING(LogKawaiiPhysics,
-			TEXT("SimpleWorldCollision: GatherRadius %.2f may be smaller than the physics chain reach %.2f. "
+			UTF8TEXT("SimpleWorldCollision: GatherRadius %.2f may be smaller than the physics chain reach %.2f. "
 				"Increase SimpleWorldCollisionGatherRadius or disable the override to use SkeletalMesh bounds."),
 			SimpleWorldCollisionGatherRadius, RequiredRadius);
 	}

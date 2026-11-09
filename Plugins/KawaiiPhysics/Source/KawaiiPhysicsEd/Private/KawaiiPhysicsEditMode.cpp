@@ -1459,10 +1459,10 @@ void FKawaiiPhysicsEditMode::DoTranslation(FVector& InTranslation)
 	FCollisionLimitBase* CollisionGraph = GetSelectCollisionLimitGraph();
 	if (!CollisionRuntime || !CollisionGraph)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning, TEXT( "Fail to edit limit." ));
+		UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT( "Fail to edit limit." ));
 		if (SelectCollisionSourceType == ECollisionSourceType::DataAsset)
 		{
-			UE_LOG(LogKawaiiPhysics, Warning, TEXT( "Please try saving the DataAsset (%s) and compile this ABP." ),
+			UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT( "Please try saving the DataAsset (%ls) and compile this ABP." ),
 			       *RuntimeNode->LimitsDataAsset.GetName());
 		}
 		return;
@@ -1505,10 +1505,10 @@ void FKawaiiPhysicsEditMode::DoRotation(FRotator& InRotation)
 	FCollisionLimitBase* CollisionGraph = GetSelectCollisionLimitGraph();
 	if (!CollisionRuntime || !CollisionGraph)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning, TEXT( "Fail to edit limit." ));
+		UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT( "Fail to edit limit." ));
 		if (SelectCollisionSourceType == ECollisionSourceType::DataAsset)
 		{
-			UE_LOG(LogKawaiiPhysics, Warning, TEXT( "Please try saving the DataAsset (%s) and compile this ABP." ),
+			UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT( "Please try saving the DataAsset (%ls) and compile this ABP." ),
 			       *RuntimeNode->LimitsDataAsset.GetName());
 		}
 		return;
@@ -1551,10 +1551,10 @@ void FKawaiiPhysicsEditMode::DoScale(FVector& InScale)
 	FCollisionLimitBase* CollisionGraph = GetSelectCollisionLimitGraph();
 	if (!CollisionRuntime || !CollisionGraph)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning, TEXT( "Fail to edit limit." ));
+		UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT( "Fail to edit limit." ));
 		if (SelectCollisionSourceType == ECollisionSourceType::DataAsset)
 		{
-			UE_LOG(LogKawaiiPhysics, Warning, TEXT( "Please try saving the DataAsset (%s) and compile this ABP." ),
+			UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT( "Please try saving the DataAsset (%ls) and compile this ABP." ),
 			       *RuntimeNode->LimitsDataAsset.GetName());
 		}
 		return;

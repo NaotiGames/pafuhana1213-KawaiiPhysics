@@ -1007,8 +1007,8 @@ void FKawaiiPhysics_ExternalForce_ProceduralWind::ResolveSharedWindSource(
 #if !UE_BUILD_SHIPPING
 		if (!LocalRuntimeState->bSharedResolveWarningLogged)
 		{
-			UE_LOG(LogKawaiiPhysics, Warning,
-			       TEXT("ProceduralWind: Shared Wind Tag is None (Source: %s). Falling back to Local source."),
+			UE_LOGF(LogKawaiiPhysics, Warning,
+			       UTF8TEXT("ProceduralWind: Shared Wind Tag is None (Source: %ls). Falling back to Local source."),
 			       *UEnum::GetValueAsString(WindSource));
 			LocalRuntimeState->bSharedResolveWarningLogged = true;
 		}
@@ -1059,8 +1059,8 @@ void FKawaiiPhysics_ExternalForce_ProceduralWind::ResolveSharedWindSource(
 		LocalRuntimeState->SharedResolveFailures >= 60 &&
 		!LocalRuntimeState->bSharedResolveWarningLogged)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("ProceduralWind: Shared Publisher for Shared Wind Tag '%s' was not found. Falling back to Local source."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("ProceduralWind: Shared Publisher for Shared Wind Tag '%ls' was not found. Falling back to Local source."),
 		       *SharedWindTag.ToString());
 		LocalRuntimeState->bSharedResolveWarningLogged = true;
 	}

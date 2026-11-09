@@ -393,8 +393,8 @@ void FAnimNode_KawaiiPhysics::ConsumeAndRemoveExpiredTransientExternalForces(con
 
 	while (TransientForceStore.Items.Num() > MaxTransientExternalForces)
 	{
-		UE_LOG(LogKawaiiPhysics, Verbose,
-		       TEXT("Transient external force cap exceeded; dropping oldest force. HandleId=%lld"),
+		UE_LOGF(LogKawaiiPhysics, Verbose,
+		       UTF8TEXT("Transient external force cap exceeded; dropping oldest force. HandleId=%lld"),
 		       static_cast<long long>(TransientForceStore.Items[0].HandleId));
 		TransientForceStore.Items.RemoveAt(0);
 	}
@@ -558,8 +558,8 @@ bool FAnimNode_KawaiiPhysics::ConsumeAndAdvancePhysicsSettingsMultipliers(const 
 			continue;
 		}
 
-		UE_LOG(LogKawaiiPhysics, Verbose,
-		       TEXT("Externally driven physics settings multiplier lease expired. HandleId=%lld BlendOutTime=%.3f"),
+		UE_LOGF(LogKawaiiPhysics, Verbose,
+		       UTF8TEXT("Externally driven physics settings multiplier lease expired. HandleId=%lld BlendOutTime=%.3f"),
 		       static_cast<long long>(Item.HandleId), Item.LeaseExpireBlendOutTime);
 		StopSettingsMultiplierAtIndex(i, Item.LeaseExpireBlendOutTime);
 	}
@@ -587,15 +587,15 @@ bool FAnimNode_KawaiiPhysics::ConsumeAndAdvancePhysicsSettingsMultipliers(const 
 				WarnedInfiniteHoldSettingsMultiplierEvictionHandleIds.Reset();
 			}
 			WarnedInfiniteHoldSettingsMultiplierEvictionHandleIds.Add(DroppedItem.HandleId);
-			UE_LOG(LogKawaiiPhysics, Warning,
-			       TEXT("Infinite-hold physics settings multiplier cap exceeded; dropping oldest override. HandleId=%lld Type=InfiniteHold"),
+			UE_LOGF(LogKawaiiPhysics, Warning,
+			       UTF8TEXT("Infinite-hold physics settings multiplier cap exceeded; dropping oldest override. HandleId=%lld Type=InfiniteHold"),
 			       static_cast<long long>(DroppedItem.HandleId));
 		}
 		else
 #endif
 		{
-			UE_LOG(LogKawaiiPhysics, Verbose,
-			       TEXT("Physics settings multiplier cap exceeded; dropping oldest override. HandleId=%lld Type=%s"),
+			UE_LOGF(LogKawaiiPhysics, Verbose,
+			       UTF8TEXT("Physics settings multiplier cap exceeded; dropping oldest override. HandleId=%lld Type=%ls"),
 			       static_cast<long long>(DroppedItem.HandleId),
 			       DroppedItem.bExternallyDriven ? TEXT("Driven") : (DroppedItem.bInfiniteHold ? TEXT("InfiniteHold") : TEXT("Timed")));
 		}
@@ -1817,7 +1817,7 @@ FAnimNode_KawaiiPhysics::FSimulationSpaceCache FAnimNode_KawaiiPhysics::GetSimul
 	}
 
 	const UEnum* EnumPtr = StaticEnum<EKawaiiPhysicsSimulationSpace>();
-	UE_LOG(LogKawaiiPhysics, Verbose, TEXT("Building Simulation Space Cache for %s"),
+	UE_LOGF(LogKawaiiPhysics, Verbose, UTF8TEXT("Building Simulation Space Cache for %ls"),
 	       *EnumPtr->GetNameStringByValue(static_cast<int64>(Space)));
 	return BuildSimulationSpaceCache(Output, Space);
 }

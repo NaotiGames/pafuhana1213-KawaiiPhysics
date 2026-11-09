@@ -45,6 +45,7 @@
 #include "Internationalization/Regex.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "Kismet2/Kismet2NameValidators.h"
+#include "Kismet2/KismetNameValidators.h"
 #include "Kismet2/CompilerResultsLog.h"
 #include "Kismet2/KismetEditorUtilities.h"
 #include "KawaiiPhysicsDeveloperSettings.h"
@@ -551,8 +552,8 @@ namespace KawaiiPhysicsEditorLibraryPrivate
 
 		if (!SkippedTagNames.IsEmpty())
 		{
-			UE_LOG(LogKawaiiPhysics, Warning,
-			       TEXT("%s: Skipped %d unresolved tag(s): %s"),
+			UE_LOGF(LogKawaiiPhysics, Warning,
+			       UTF8TEXT("%ls: Skipped %d unresolved tag(s): %ls"),
 			       LogContext,
 			       SkippedTagNames.Num(),
 			       *FString::Join(SkippedTagNames, TEXT(", ")));
@@ -1446,8 +1447,8 @@ namespace KawaiiPhysicsEditorLibraryPrivate
 
 		if (DoesAutoPlacementOverlapExistingNode(Graph, NodePosition))
 		{
-			UE_LOG(LogKawaiiPhysics, Warning,
-			       TEXT("AddKawaiiPhysicsNodes: 自動配置の重なり回避が上限に達しました。最後に計算した座標を使用します。"));
+			UE_LOGF(LogKawaiiPhysics, Warning,
+			       UTF8TEXT("AddKawaiiPhysicsNodes: 自動配置の重なり回避が上限に達しました。最後に計算した座標を使用します。"));
 		}
 
 		return NodePosition;
@@ -1607,8 +1608,8 @@ namespace KawaiiPhysicsEditorLibraryPrivate
 		UAnimGraphNode_Root* RootNode = FindResultRootNodeForEditorLibrary(Graph);
 		if (!RootNode)
 		{
-			UE_LOG(LogKawaiiPhysics, Warning,
-			       TEXT("AddKawaiiPhysicsNodes: Result node was not found in AnimGraph '%s'."),
+			UE_LOGF(LogKawaiiPhysics, Warning,
+			       UTF8TEXT("AddKawaiiPhysicsNodes: Result node was not found in AnimGraph '%ls'."),
 			       *Graph->GetName());
 			return false;
 		}
@@ -1783,8 +1784,8 @@ namespace KawaiiPhysicsEditorLibraryPrivate
 		UAnimGraphNode_Root* RootNode = FindResultRootNodeForEditorLibrary(Graph);
 		if (!RootNode)
 		{
-			UE_LOG(LogKawaiiPhysics, Warning,
-			       TEXT("AddKawaiiPhysicsSharedPublisherNode: Result node was not found in AnimGraph '%s'."),
+			UE_LOGF(LogKawaiiPhysics, Warning,
+			       UTF8TEXT("AddKawaiiPhysicsSharedPublisherNode: Result node was not found in AnimGraph '%ls'."),
 			       *Graph->GetName());
 			return false;
 		}
@@ -2263,8 +2264,8 @@ void UKawaiiPhysicsEditorLibrary::FindAllPresetAssetData(TArray<TStrongObjectPtr
 		}
 		else
 		{
-			UE_LOG(LogKawaiiPhysics, Warning,
-			       TEXT("FindAllPresetAssetData: Failed to load KawaiiPhysics preset asset '%s'."),
+			UE_LOGF(LogKawaiiPhysics, Warning,
+			       UTF8TEXT("FindAllPresetAssetData: Failed to load KawaiiPhysics preset asset '%ls'."),
 			       *AssetData.GetSoftObjectPath().ToString());
 		}
 	}
@@ -2405,8 +2406,8 @@ TArray<FKawaiiPhysicsGraphNodeHandle> UKawaiiPhysicsEditorLibrary::AddKawaiiPhys
 	UEdGraph* Graph = KawaiiPhysicsEditorLibraryPrivate::FindPlacementAnimGraph(AnimBlueprint, GraphName);
 	if (!Graph)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("AddKawaiiPhysicsNodes: AnimGraph '%s' was not found in AnimBlueprint '%s'."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("AddKawaiiPhysicsNodes: AnimGraph '%ls' was not found in AnimBlueprint '%ls'."),
 		       *(GraphName.IsNone() ? UEdGraphSchema_K2::GN_AnimGraph : GraphName).ToString(),
 		       *AnimBlueprint->GetName());
 		return Result;
@@ -2448,7 +2449,7 @@ TArray<FKawaiiPhysicsGraphNodeHandle> UKawaiiPhysicsEditorLibrary::AddKawaiiPhys
 
 		for (const FString& ValidationMessage : ValidationMessages)
 		{
-			UE_LOG(LogKawaiiPhysics, Warning, TEXT("AddKawaiiPhysicsNodes: %s"), *ValidationMessage);
+			UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT("AddKawaiiPhysicsNodes: %ls"), *ValidationMessage);
 		}
 
 		RequestValidities[RequestIndex] = bRequestValid;
@@ -2511,8 +2512,8 @@ TArray<FKawaiiPhysicsGraphNodeHandle> UKawaiiPhysicsEditorLibrary::AddKawaiiPhys
 				}
 				else
 				{
-					UE_LOG(LogKawaiiPhysics, Warning,
-					       TEXT("AddKawaiiPhysicsNodes: Request[%d] RootBone=%s auto-connect failed. Node was left unconnected."),
+					UE_LOGF(LogKawaiiPhysics, Warning,
+					       UTF8TEXT("AddKawaiiPhysicsNodes: Request[%d] RootBone=%ls auto-connect failed. Node was left unconnected."),
 					       RequestIndex,
 					       *ResolvedRequest.RootBoneName.ToString());
 				}
@@ -2544,8 +2545,8 @@ TArray<FKawaiiPhysicsGraphNodeHandle> UKawaiiPhysicsEditorLibrary::AddKawaiiPhys
 			}
 			else
 			{
-				UE_LOG(LogKawaiiPhysics, Warning,
-				       TEXT("AddKawaiiPhysicsNodes: Request[%d] RootBone=%s auto-connect failed. Node was left unconnected."),
+				UE_LOGF(LogKawaiiPhysics, Warning,
+				       UTF8TEXT("AddKawaiiPhysicsNodes: Request[%d] RootBone=%ls auto-connect failed. Node was left unconnected."),
 				       RequestIndex,
 				       *ResolvedRequest.RootBoneName.ToString());
 			}
@@ -2609,8 +2610,8 @@ FKawaiiPhysicsSharedPublisherGraphNodeHandle UKawaiiPhysicsEditorLibrary::AddKaw
 	UEdGraph* Graph = KawaiiPhysicsEditorLibraryPrivate::FindPlacementAnimGraph(AnimBlueprint, NAME_None);
 	if (!Graph)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("AddKawaiiPhysicsSharedPublisherNode: AnimGraph was not found in AnimBlueprint '%s'."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("AddKawaiiPhysicsSharedPublisherNode: AnimGraph was not found in AnimBlueprint '%ls'."),
 		       *AnimBlueprint->GetName());
 		return FKawaiiPhysicsSharedPublisherGraphNodeHandle();
 	}
@@ -2637,8 +2638,8 @@ FKawaiiPhysicsSharedPublisherGraphNodeHandle UKawaiiPhysicsEditorLibrary::AddKaw
 	{
 		if (!KawaiiPhysicsEditorLibraryPrivate::ConnectSharedPublisherNodeBeforeResult(Graph, NewGraphNode))
 		{
-			UE_LOG(LogKawaiiPhysics, Warning,
-			       TEXT("AddKawaiiPhysicsSharedPublisherNode: auto-connect failed. Node was left unconnected."));
+			UE_LOGF(LogKawaiiPhysics, Warning,
+			       UTF8TEXT("AddKawaiiPhysicsSharedPublisherNode: auto-connect failed. Node was left unconnected."));
 		}
 	}
 
@@ -2655,8 +2656,8 @@ bool UKawaiiPhysicsEditorLibrary::SetAnimGraphInputAnimation(
 {
 	if (!AnimBlueprint || !Animation)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("SetAnimGraphInputAnimation: AnimBlueprint and Animation must not be null."));
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("SetAnimGraphInputAnimation: AnimBlueprint and Animation must not be null."));
 		return false;
 	}
 
@@ -2665,8 +2666,8 @@ bool UKawaiiPhysicsEditorLibrary::SetAnimGraphInputAnimation(
 	USkeleton* AnimationSkeleton = Animation->GetSkeleton();
 	if (!TargetSkeleton || !AnimationSkeleton || !TargetSkeleton->IsCompatibleForEditor(AnimationSkeleton))
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("SetAnimGraphInputAnimation: Skeleton of Animation '%s' (%s) does not match the target skeleton of AnimBlueprint '%s' (%s)."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("SetAnimGraphInputAnimation: Skeleton of Animation '%ls' (%ls) does not match the target skeleton of AnimBlueprint '%ls' (%ls)."),
 		       *Animation->GetName(),
 		       AnimationSkeleton ? *AnimationSkeleton->GetName() : TEXT("None"),
 		       *AnimBlueprint->GetName(),
@@ -2677,8 +2678,8 @@ bool UKawaiiPhysicsEditorLibrary::SetAnimGraphInputAnimation(
 	UEdGraph* Graph = KawaiiPhysicsEditorLibraryPrivate::FindPlacementAnimGraph(AnimBlueprint, GraphName);
 	if (!Graph)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("SetAnimGraphInputAnimation: AnimGraph '%s' was not found in AnimBlueprint '%s'."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("SetAnimGraphInputAnimation: AnimGraph '%ls' was not found in AnimBlueprint '%ls'."),
 		       *(GraphName.IsNone() ? UEdGraphSchema_K2::GN_AnimGraph : GraphName).ToString(),
 		       *AnimBlueprint->GetName());
 		return false;
@@ -2687,8 +2688,8 @@ bool UKawaiiPhysicsEditorLibrary::SetAnimGraphInputAnimation(
 	UAnimGraphNode_Root* RootNode = KawaiiPhysicsEditorLibraryPrivate::FindResultRootNodeForEditorLibrary(Graph);
 	if (!RootNode)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("SetAnimGraphInputAnimation: Result node was not found in AnimGraph '%s'."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("SetAnimGraphInputAnimation: Result node was not found in AnimGraph '%ls'."),
 		       *Graph->GetName());
 		return false;
 	}
@@ -2697,8 +2698,8 @@ bool UKawaiiPhysicsEditorLibrary::SetAnimGraphInputAnimation(
 	UEdGraphPin* UnlinkedPosePin = nullptr;
 	if (!KawaiiPhysicsEditorLibraryPrivate::FindAnimGraphInputPoseTarget(RootNode, ExistingSequencePlayer, UnlinkedPosePin))
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("SetAnimGraphInputAnimation: The pose chain from Result in AnimGraph '%s' reaches neither a SequencePlayer nor an unlinked pose input."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("SetAnimGraphInputAnimation: The pose chain from Result in AnimGraph '%ls' reaches neither a SequencePlayer nor an unlinked pose input."),
 		       *Graph->GetName());
 		return false;
 	}
@@ -2740,8 +2741,8 @@ bool UKawaiiPhysicsEditorLibrary::SetAnimGraphInputAnimation(
 	{
 		// 接続できなければ追加したプレイヤーを取り除いてグラフを元の構成へ戻す。
 		FBlueprintEditorUtils::RemoveNode(AnimBlueprint, NewSequencePlayer, true);
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("SetAnimGraphInputAnimation: Failed to connect the SequencePlayer to pin '%s' in AnimGraph '%s'."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("SetAnimGraphInputAnimation: Failed to connect the SequencePlayer to pin '%ls' in AnimGraph '%ls'."),
 		       *UnlinkedPosePin->PinName.ToString(),
 		       *Graph->GetName());
 		return false;
@@ -2933,15 +2934,15 @@ bool UKawaiiPhysicsEditorLibrary::LayoutKawaiiPhysicsAnimGraph(
 {
 	if (!AnimBlueprint)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning, TEXT("LayoutKawaiiPhysicsAnimGraph: AnimBlueprint must not be null."));
+		UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT("LayoutKawaiiPhysicsAnimGraph: AnimBlueprint must not be null."));
 		return false;
 	}
 
 	UEdGraph* Graph = KawaiiPhysicsEditorLibraryPrivate::FindPlacementAnimGraph(AnimBlueprint, GraphName);
 	if (!Graph)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("LayoutKawaiiPhysicsAnimGraph: AnimGraph '%s' was not found in AnimBlueprint '%s'."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("LayoutKawaiiPhysicsAnimGraph: AnimGraph '%ls' was not found in AnimBlueprint '%ls'."),
 		       *(GraphName.IsNone() ? UEdGraphSchema_K2::GN_AnimGraph : GraphName).ToString(),
 		       *AnimBlueprint->GetName());
 		return false;
@@ -2949,8 +2950,8 @@ bool UKawaiiPhysicsEditorLibrary::LayoutKawaiiPhysicsAnimGraph(
 
 	if (!KawaiiPhysicsEditorLibraryPrivate::FindResultRootNodeForEditorLibrary(Graph))
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("LayoutKawaiiPhysicsAnimGraph: Result node was not found in AnimGraph '%s'."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("LayoutKawaiiPhysicsAnimGraph: Result node was not found in AnimGraph '%ls'."),
 		       *Graph->GetName());
 		return false;
 	}
@@ -2976,7 +2977,7 @@ int32 UKawaiiPhysicsEditorLibrary::CompileAnimBlueprintWithMessages(
 	OutMessages.Reset();
 	if (!AnimBlueprint)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning, TEXT("CompileAnimBlueprintWithMessages: AnimBlueprint is null."));
+		UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT("CompileAnimBlueprintWithMessages: AnimBlueprint is null."));
 		return INDEX_NONE;
 	}
 
@@ -3110,8 +3111,8 @@ TArray<FName> UKawaiiPhysicsEditorLibrary::FindBonesByPattern(USkeleton* Skeleto
 			// NAME_SIZEを超える一致はFName化できないためスキップし、警告は1回だけ出す。
 			if (!bLongMatchWarningLogged)
 			{
-				UE_LOG(LogKawaiiPhysics, Warning,
-				       TEXT("FindBonesByPattern: Regex match is too long to convert to FName. Pattern=\"%s\", MatchLength=%d, MaxLength=%d"),
+				UE_LOGF(LogKawaiiPhysics, Warning,
+				       UTF8TEXT("FindBonesByPattern: Regex match is too long to convert to FName. Pattern=\"%ls\", MatchLength=%d, MaxLength=%d"),
 				       *Pattern, MatchedBoneName.Len(), NAME_SIZE - 1);
 				bLongMatchWarningLogged = true;
 			}
@@ -3715,7 +3716,7 @@ bool UKawaiiPhysicsEditorLibrary::SetPresetDescription(UKawaiiPhysicsPresetDataA
 {
 	if (!Preset)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning, TEXT("SetPresetDescription: Preset is null."));
+		UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT("SetPresetDescription: Preset is null."));
 		return false;
 	}
 
@@ -3850,8 +3851,8 @@ TArray<FName> UKawaiiPhysicsEditorLibrary::GetGraphNodePresetDiffProperties(
 	UAnimGraphNode_KawaiiPhysics* GraphNode = KawaiiPhysicsEditorLibraryPrivate::GetGraphNode(Handle);
 	if (!GraphNode || !Preset)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("GetGraphNodePresetDiffProperties: Invalid graph node handle or preset. HandleValid=%s PresetValid=%s."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("GetGraphNodePresetDiffProperties: Invalid graph node handle or preset. HandleValid=%ls PresetValid=%ls."),
 		       GraphNode ? TEXT("true") : TEXT("false"),
 		       Preset ? TEXT("true") : TEXT("false"));
 		return DiffProperties;
@@ -3869,8 +3870,8 @@ TArray<FKawaiiPhysicsPresetDiffValue> UKawaiiPhysicsEditorLibrary::GetGraphNodeP
 	UAnimGraphNode_KawaiiPhysics* GraphNode = KawaiiPhysicsEditorLibraryPrivate::GetGraphNode(Handle);
 	if (!GraphNode || !Preset)
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("GetGraphNodePresetDiffValues: Invalid graph node handle or preset. HandleValid=%s PresetValid=%s."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("GetGraphNodePresetDiffValues: Invalid graph node handle or preset. HandleValid=%ls PresetValid=%ls."),
 		       GraphNode ? TEXT("true") : TEXT("false"),
 		       Preset ? TEXT("true") : TEXT("false"));
 		return TArray<FKawaiiPhysicsPresetDiffValue>();
@@ -3912,8 +3913,8 @@ int32 UKawaiiPhysicsEditorLibrary::ApplyPresetToProject(
 	if (Preset->TargetTags.IsEmpty())
 	{
 		// TargetTagsが空なら対象ノードが存在しないため、何もせず戻る。
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("ApplyPresetToProject: Preset '%s' has empty TargetTags. No nodes will be targeted."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("ApplyPresetToProject: Preset '%ls' has empty TargetTags. No nodes will be targeted."),
 		       *Preset->GetPathName());
 		return 0;
 	}
@@ -3982,8 +3983,8 @@ int32 UKawaiiPhysicsEditorLibrary::ApplyPresetToProject(
 				bPackageCheckedOut = KawaiiPhysicsEditorLibraryPrivate::CheckOutPackageIfNeeded(Package, bCheckOutFiles);
 				if (!bPackageCheckedOut)
 				{
-					UE_LOG(LogKawaiiPhysics, Warning,
-					       TEXT("ApplyPresetToProject: Failed to check out package '%s'. Skipping matched nodes in this asset."),
+					UE_LOGF(LogKawaiiPhysics, Warning,
+					       UTF8TEXT("ApplyPresetToProject: Failed to check out package '%ls'. Skipping matched nodes in this asset."),
 					       Package ? *Package->GetName() : TEXT("<None>"));
 				}
 			}
@@ -4015,8 +4016,8 @@ int32 UKawaiiPhysicsEditorLibrary::ApplyPresetToProject(
 		}
 	}
 
-	UE_LOG(LogKawaiiPhysics, Display,
-	       TEXT("ApplyPresetToProject: Preset=%s MatchedNodes=%d AppliedNodes=%d SkippedNodes=%d"),
+	UE_LOGF(LogKawaiiPhysics, Display,
+	       UTF8TEXT("ApplyPresetToProject: Preset=%ls MatchedNodes=%d AppliedNodes=%d SkippedNodes=%d"),
 	       *Preset->GetPathName(),
 	       MatchedNodeCount,
 	       AppliedNodeCount,
@@ -4048,8 +4049,8 @@ bool UKawaiiPhysicsEditorLibrary::AuditKawaiiPhysicsNodes(
 		if (!AnimBlueprint)
 		{
 			// ロード失敗は結果をfalseにするが、他のアセットの監査は継続する。
-			UE_LOG(LogKawaiiPhysics, Error,
-			       TEXT("AuditKawaiiPhysicsNodes: Failed to load AnimBlueprint asset '%s'."),
+			UE_LOGF(LogKawaiiPhysics, Error,
+			       UTF8TEXT("AuditKawaiiPhysicsNodes: Failed to load AnimBlueprint asset '%ls'."),
 			       *AssetData.GetSoftObjectPath().ToString());
 			bResult = false;
 			continue;

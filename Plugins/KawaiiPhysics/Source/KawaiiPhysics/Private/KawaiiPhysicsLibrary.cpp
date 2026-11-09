@@ -383,7 +383,7 @@ namespace KawaiiPhysicsLibraryPrivate
 	{
 		if (!IsInGameThread())
 		{
-			UE_LOG(LogKawaiiPhysics, Warning, TEXT("p.KawaiiPhysics.DumpNodes must run on the GameThread."));
+			UE_LOGF(LogKawaiiPhysics, Warning, UTF8TEXT("p.KawaiiPhysics.DumpNodes must run on the GameThread."));
 			return;
 		}
 
@@ -418,8 +418,8 @@ namespace KawaiiPhysicsLibraryPrivate
 					[&DumpedNodeCount, AnimBPName, ComponentName, ActorName](FAnimNode_KawaiiPhysics& Node)
 					{
 						++DumpedNodeCount;
-						UE_LOG(LogKawaiiPhysics, Log,
-						       TEXT("DumpNodes: AnimBP=%s Component=%s Actor=%s Tag=%s RootBone=%s Damping=%.3f Stiffness=%.3f Radius=%.3f Gravity=%s Wind=%s WindScale=%.3f ModifyBones=%d"),
+						UE_LOGF(LogKawaiiPhysics, Log,
+						       UTF8TEXT("DumpNodes: AnimBP=%ls Component=%ls Actor=%ls Tag=%ls RootBone=%ls Damping=%.3f Stiffness=%.3f Radius=%.3f Gravity=%ls Wind=%ls WindScale=%.3f ModifyBones=%d"),
 						       *AnimBPName.ToString(),
 						       *ComponentName.ToString(),
 						       *ActorName.ToString(),
@@ -436,7 +436,7 @@ namespace KawaiiPhysicsLibraryPrivate
 			}
 		}
 
-		UE_LOG(LogKawaiiPhysics, Log, TEXT("DumpNodes: Total=%d"), DumpedNodeCount);
+		UE_LOGF(LogKawaiiPhysics, Log, UTF8TEXT("DumpNodes: Total=%d"), DumpedNodeCount);
 	}
 
 	FAutoConsoleCommand CVarKawaiiPhysicsDumpNodes(
@@ -649,8 +649,8 @@ bool KawaiiPhysics::CanQueueTransientExternalForce(const FInstancedStruct& Exter
 
 	if (StructInstanceHasLiveObjectReference(ScriptStruct, ExternalForce.GetMemory()))
 	{
-		UE_LOG(LogKawaiiPhysics, Warning,
-		       TEXT("%s: transient force storage is not GC-tracked; rejected a force containing live UObject references (e.g. ExternalOwner or curve assets). Clear the references or use the authored ExternalForces array instead."),
+		UE_LOGF(LogKawaiiPhysics, Warning,
+		       UTF8TEXT("%ls: transient force storage is not GC-tracked; rejected a force containing live UObject references (e.g. ExternalOwner or curve assets). Clear the references or use the authored ExternalForces array instead."),
 		       ContextName);
 		return false;
 	}

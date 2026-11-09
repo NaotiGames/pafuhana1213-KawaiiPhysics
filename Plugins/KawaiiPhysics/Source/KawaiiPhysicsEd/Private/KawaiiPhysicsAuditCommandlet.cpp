@@ -54,8 +54,8 @@ namespace KawaiiPhysicsAuditCommandletPrivate
 			}
 			else
 			{
-				UE_LOG(LogKawaiiPhysics, Warning,
-				       TEXT("KawaiiPhysicsAudit: FilterTags contains unknown tag '%s'."),
+				UE_LOGF(LogKawaiiPhysics, Warning,
+				       UTF8TEXT("KawaiiPhysicsAudit: FilterTags contains unknown tag '%ls'."),
 				       *TagName);
 			}
 		}
@@ -151,8 +151,8 @@ namespace KawaiiPhysicsAuditCommandletPrivate
 				DiffPropertyNames.Add(DiffProperty.ToString());
 			}
 
-			UE_LOG(LogKawaiiPhysics, Display,
-			       TEXT("KawaiiPhysicsAudit: ABP=%s Graph=%s RootBone=%s Tag=%s MatchedPreset=%s MatchesPreset=%s MatchedCount=%d DiffProperties=%s BoneSubdivision=%d BoneConstraintSubdivision=%d WorldCollision=%s UseSharedCollision=%s SharedCollisionSource=%s SimpleWorldCollision=%s SimpleWorldSkeletalMeshCollision=%s Wind=%s ExternalForces=%d WarmUpFrames=%d"),
+			UE_LOGF(LogKawaiiPhysics, Display,
+			       UTF8TEXT("KawaiiPhysicsAudit: ABP=%ls Graph=%ls RootBone=%ls Tag=%ls MatchedPreset=%ls MatchesPreset=%ls MatchedCount=%d DiffProperties=%ls BoneSubdivision=%d BoneConstraintSubdivision=%d WorldCollision=%ls UseSharedCollision=%ls SharedCollisionSource=%ls SimpleWorldCollision=%ls SimpleWorldSkeletalMeshCollision=%ls Wind=%ls ExternalForces=%d WarmUpFrames=%d"),
 			       *Entry.AnimBlueprintPath.ToString(),
 			       *Entry.GraphName.ToString(),
 			       *Entry.RootBoneName.ToString(),
@@ -249,13 +249,13 @@ int32 UKawaiiPhysicsAuditCommandlet::Main(const FString& Params)
 		Entries,
 		bIncludeDiffValues))
 	{
-		UE_LOG(LogKawaiiPhysics, Error, TEXT("KawaiiPhysicsAudit: Audit failed."));
+		UE_LOGF(LogKawaiiPhysics, Error, UTF8TEXT("KawaiiPhysicsAudit: Audit failed."));
 		return 2;
 	}
 
 	const int32 PresetDriftCount = KawaiiPhysicsAuditCommandletPrivate::CountPresetDriftEntries(Entries);
-	UE_LOG(LogKawaiiPhysics, Display,
-	       TEXT("KawaiiPhysicsAudit: AnimBlueprints=%d Nodes=%d PresetDrifts=%d"),
+	UE_LOGF(LogKawaiiPhysics, Display,
+	       UTF8TEXT("KawaiiPhysicsAudit: AnimBlueprints=%d Nodes=%d PresetDrifts=%d"),
 	       TotalAnimBlueprints,
 	       Entries.Num(),
 	       PresetDriftCount);
@@ -265,14 +265,14 @@ int32 UKawaiiPhysicsAuditCommandlet::Main(const FString& Params)
 	{
 		if (!KawaiiPhysicsAuditCommandletPrivate::WriteAuditJsonFile(OutputPath, Entries, TotalAnimBlueprints))
 		{
-			UE_LOG(LogKawaiiPhysics, Error,
-			       TEXT("KawaiiPhysicsAudit: Failed to write JSON file '%s'."),
+			UE_LOGF(LogKawaiiPhysics, Error,
+			       UTF8TEXT("KawaiiPhysicsAudit: Failed to write JSON file '%ls'."),
 			       *OutputPath);
 			return 2;
 		}
 
-		UE_LOG(LogKawaiiPhysics, Display,
-		       TEXT("KawaiiPhysicsAudit: Wrote JSON file '%s'."),
+		UE_LOGF(LogKawaiiPhysics, Display,
+		       UTF8TEXT("KawaiiPhysicsAudit: Wrote JSON file '%ls'."),
 		       *OutputPath);
 	}
 	else

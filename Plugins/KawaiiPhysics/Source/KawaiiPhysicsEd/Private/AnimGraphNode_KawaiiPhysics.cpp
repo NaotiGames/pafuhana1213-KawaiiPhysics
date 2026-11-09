@@ -1493,8 +1493,8 @@ void UAnimGraphNode_KawaiiPhysics::CheckPresetDiff()
 			}
 		}
 
-		UE_LOG(LogKawaiiPhysics, Display,
-		       TEXT("CheckPresetDiff: NodeTag=%s Preset=%s DiffCount=%d DiffProperties=%s"),
+		UE_LOGF(LogKawaiiPhysics, Display,
+		       UTF8TEXT("CheckPresetDiff: NodeTag=%ls Preset=%ls DiffCount=%d DiffProperties=%ls"),
 		       *Node.KawaiiPhysicsTag.ToString(),
 		       *Snapshot->PresetPath.ToString(),
 		       Snapshot->DiffCount,
